@@ -19,7 +19,8 @@ final class HealthzController
 
     public function __construct(
         ElasticSearchEventRepository $elasticSearchEventRepository,
-        MysqlReadModelUserRepository $mysqlReadModelUserRepository)
+        MysqlReadModelUserRepository $mysqlReadModelUserRepository
+    )
     {
         $this->elasticSearchEventRepository = $elasticSearchEventRepository;
         $this->mysqlReadModelUserRepository = $mysqlReadModelUserRepository;
