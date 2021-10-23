@@ -81,7 +81,8 @@ final class MysqlReadModelUserRepository extends MysqlRepository implements Chec
     {
         return $this->oneOrException(
             $this->getUserByEmailQueryBuilder($email)
-            ->select('
+            ->select(
+                '
                 user.uuid, 
                 user.credentials.email, 
                 user.createdAt, 

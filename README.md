@@ -1,4 +1,84 @@
-# Symfony 5 ES CQRS Boilerplate
+# Symfony DDD CQRS
+
+This project is sample stack Domain Driven Design (DDD)  and CQRS with Symfony 5 into Docker containers using Docker-compose,
+using MySQL 8 as a database.
+
+
+![DDD](img/ddd.png?raw=true "DDD")
+
+## Installation
+
+1. Run `docker-compose up -d`
+
+```
+ ⠿ Network symfony-ddd-cqrs_default                 Created                                                        0.0s
+ ⠿ Container symfony-ddd-cqrs-elasticsearch-1       Started                                                        1.1s
+ ⠿ Container symfony-ddd-cqrs-rmq-1                 Started                                                        1.1s
+ ⠿ Container symfony-ddd-cqrs-mysql-1               Started                                                        0.8s
+ ⠿ Container symfony-ddd-cqrs-code-1                Started                                                        0.8s
+ ⠿ Container symfony-ddd-cqrs-start_dependencies-1  Started                                                        2.0s
+ ⠿ Container symfony-ddd-cqrs-workers_users-1       Started                                                        2.1s
+ ⠿ Container symfony-ddd-cqrs-php-1                 Started                                                        2.2s
+ ⠿ Container symfony-ddd-cqrs-workers_events-1      Started                                                        2.0s
+ ⠿ Container symfony-ddd-cqrs-nginx-1               Started                                                        3.1s
+```
+
+2. Use this value for the DATABASE_URL environment variable of Symfony:
+
+```
+DATABASE_URL=mysql://root:api@mysql:3306/api?serverVersion=8.0
+```
+
+User and password of the database is the `env` file at the root of the project.
+
+3. In your dev environment add this line in your hosts file:
+```
+127.0.0.1 dev.app.com
+```
+
+4.- Execute composer install
+```
+docker exec -ti  symfony-ddd-cqrs-code-1 composer install
+```
+
+5.- Execute migrations
+
+View status:
+```
+docker exec -ti symfony-ddd-cqrs-code-1 php bin/console doctrine:migrations:status
+```
+execute all migrations pending:
+```
+docker exec -ti symfony-ddd-cqrs-code-1 php bin/console doctrine:migrations:migrate 
+```
+
+Default path for bundle:
+```
+http://dev.app.com/user/
+http://dev.app.com/order/
+```
+
+6.- Tools for testing, fixed and evalute code.
+
+For execute PHPUnit, PHPStan, Psalm and PHP-cs-fixer in development time
+
+- for execute PHPUnit
+```
+docker exec -ti symfony-ddd-cqrs-code-1 php vendor/bin/phpunit
+```
+- execute PHPStan
+```
+docker exec -ti symfony-ddd-cqrs-code-1 php vendor/bin/phpstan
+```
+- execute Psalm
+```
+docker exec -ti symfony-ddd-cqrs-code-1 php vendor/bin/psalm --show-info=true
+```
+- execute PHP-cs-fixer
+```
+docker exec -ti symfony-ddd-cqrs-code-1 php vendor/bin/php-cs-fixer fix src
+```
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
